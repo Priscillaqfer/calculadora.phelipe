@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f50537">
+<title>Calculadora do custo de caução e fiador na locação</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#141417;--card:#1e1e23;--ink:#f2f2f5;--mute:#a3a3ae;--line:#33333b;--acc:#ff5a78;--btn:#f50537;--c1:#f50537;--c2:#ff8fa3;--c3:#c9c9d2;--c4:#c9c9d2;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#141417}}
+:root[data-theme="dark"]{--bg:#141417;--card:#1e1e23;--ink:#f2f2f5;--mute:#a3a3ae;--line:#33333b;--acc:#ff5a78;--c4:#c9c9d2}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;border-top:6px solid #f50537;background:var(--bg);color:var(--ink);font:16px/1.5 Manrope,system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 18px 48px}
+h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.15;margin:0 0 8px;font-weight:800}
+h2{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:18px 0 10px}
+h2:first-child{margin-top:0}
+.row.s{font-size:.82rem;color:var(--mute);padding:5px 0 5px 18px;border-top:0}
+.row.t{font-weight:800}
+.lead{color:var(--mute);margin:0 0 24px;max-width:62ch}
+.grid{display:grid;gap:18px;grid-template-columns:1.1fr .9fr;align-items:start}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.two{grid-template-columns:1fr}}
+label{display:block;font-weight:600;font-size:.88rem;margin:0 0 4px}
+.f{margin-bottom:12px}
+.hint{font-size:.76rem;color:var(--mute);margin-top:2px}
+input{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+input:focus-visible,a:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.total{font-size:clamp(2rem,6vw,3rem);font-weight:800;line-height:1.1;margin:4px 0}
+.sub{color:var(--mute);font-size:.9rem}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:18px 0 10px;background:var(--line)}
+.bar span{display:block;transition:width .25s}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:.93rem}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.brand{display:block;width:56px;height:56px;border-radius:12px;margin:0 0 18px}
+.cta{display:inline-block;margin-top:18px;padding:12px 18px;border-radius:8px;background:var(--btn);color:#fff;font-weight:800;text-decoration:none}
+.note{font-size:.78rem;color:var(--mute);margin-top:18px}
+@media(prefers-reduced-motion:reduce){.bar span{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<img class="brand" src="data:image/jpeg;base64,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" alt="Ita Seguros" width="56" height="56">
+<h1>Quanto caução e fiador custam para a sua imobiliária?</h1>
+<p class="lead">Informe os dados dos contratos com caução e com fiador e veja o custo anual estimado de cada garantia. Os valores iniciais são exemplos; troque pelos seus, preferencialmente com médias dos últimos 12 a 24 meses.</p>
+<div class="grid">
+<section class="card" aria-label="Dados da carteira">
+<h2>Carteira</h2>
+<div class="two">
+<div class="f"><label for="cC">Contratos ativos com caução</label><input id="cC" type="number" min="0" value="150" inputmode="numeric"></div>
+<div class="f"><label for="cF">Contratos ativos com fiador</label><input id="cF" type="number" min="0" value="150" inputmode="numeric"></div>
+<div class="f"><label for="aluguel">Aluguel médio mensal (R$)</label><input id="aluguel" type="number" min="0" value="2500" inputmode="decimal"></div>
+</div>
+<h2>Caução</h2>
+<div class="two">
+<div class="f"><label for="inadC">Contratos inadimplentes por ano (%)</label><input id="inadC" type="number" min="0" max="100" step="0.1" value="6" inputmode="decimal"></div>
+<div class="f"><label for="mesesC">Meses de débito não cobertos pela caução, por caso</label><input id="mesesC" type="number" min="0" step="0.5" value="5" inputmode="decimal"></div>
+</div>
+<h2>Fiador</h2>
+<div class="two">
+<div class="f"><label for="inadF">Contratos inadimplentes por ano (%)</label><input id="inadF" type="number" min="0" max="100" step="0.1" value="6" inputmode="decimal"></div>
+<div class="f"><label for="naoRec">Valor médio não recuperado por caso (R$)</label><input id="naoRec" type="number" min="0" value="6000" inputmode="decimal"><div class="hint">Aluguéis e encargos que o fiador não pagou, sem contar o custo jurídico.</div></div>
+</div>
+<h2>Jurídico (caução e fiador)</h2>
+<div class="f"><label for="jur">Custo jurídico médio por caso (R$)</label><input id="jur" type="number" min="0" value="3000" inputmode="decimal"></div>
+</section>
+
+<section class="card" aria-live="polite" aria-label="Resultado">
+<div class="sub">Custo estimado por ano</div>
+<div class="total" id="total">R$ 0</div>
+<div class="sub" id="porContrato"></div>
+<div class="bar" aria-hidden="true"><span id="b1" style="background:var(--c1)"></span><span id="b2" style="background:var(--c3)"></span></div>
+<div class="row t"><span><i class="dot" style="background:var(--c1)"></i>Caução</span><strong id="rC"></strong></div>
+<div class="row s"><span>Débito acima da caução</span><span id="d1"></span></div>
+<div class="row s"><span>Custos jurídicos</span><span id="d2"></span></div>
+<div class="row t"><span><i class="dot" style="background:var(--c3)"></i>Fiador</span><strong id="rF"></strong></div>
+<div class="row s"><span>Valor não recuperado</span><span id="d4"></span></div>
+<div class="row s"><span>Custos jurídicos</span><span id="d5"></span></div>
+<div class="row"><span>Casos de inadimplência por ano</span><strong id="casos"></strong></div>
+<a class="cta" id="cta" href="#">Saiba mais</a>
+<p class="note">Estimativa ilustrativa, baseada apenas nos números informados. O débito da caução considera só a parte que excede o valor depositado. Não é cotação, proposta nem garantia de resultado.</p>
+</section>
+</div>
+</main>
+<script>
+// Troque pelo link da sua agenda ou formulário (ex.: https://...)
+var CTA_URL = "https://xn--dominando-o-ttulo-de-capitalizao-iyc9k4h.my.canva.site/";
+var ids = ["cC","cF","aluguel","inadC","mesesC","inadF","naoRec","jur"];
+var brl = new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+function v(id){var n=parseFloat(document.getElementById(id).value);return isFinite(n)&&n>0?n:0}
+function set(id,t){document.getElementById(id).textContent=t}
+function calc(){
+  var cC=v("cC"),cF=v("cF");
+  var casosC=cC*v("inadC")/100,casosF=cF*v("inadF")/100;
+  var d1=casosC*v("mesesC")*v("aluguel"),d2=casosC*v("jur");
+  var d4=casosF*v("naoRec"),d5=casosF*v("jur");
+  var tC=d1+d2,tF=d4+d5,t=tC+tF,n=cC+cF;
+  set("total",brl.format(t));
+  set("porContrato",n?"Cerca de "+brl.format(t/n)+" por contrato ao ano":"");
+  set("rC",brl.format(tC));set("rF",brl.format(tF));
+  set("d1",brl.format(d1));set("d2",brl.format(d2));set("d4",brl.format(d4));set("d5",brl.format(d5));
+  set("casos",(casosC+casosF).toLocaleString("pt-BR",{maximumFractionDigits:1}));
+  document.getElementById("b1").style.width=(t?tC/t*100:0)+"%";
+  document.getElementById("b2").style.width=(t?tF/t*100:0)+"%";
+}
+ids.forEach(function(i){document.getElementById(i).addEventListener("input",calc)});
+var cta=document.getElementById("cta");cta.href=CTA_URL;cta.target="_blank";cta.rel="noopener";
+calc();
+</script>
+</body>
+</html>
